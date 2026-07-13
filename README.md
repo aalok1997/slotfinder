@@ -7,7 +7,7 @@ tells you **which draft slot** gives you the best odds of actually landing them.
 
 1. **Set your league** — 8/10/12/14/16 teams, Standard / Half-PPR / PPR, rounds to plan.
 2. **Build a target list** — search any player (Sleeper player DB); they slot into
-   position groups with Sleeper-style caps: 3 QB · 5 RB · 5 WR · 3 TE · 3 Flex · 1 K · 5 Bench.
+   position groups with Sleeper-style caps: 3 QB · 5 RB · 5 WR · 3 TE · 5 Flex · 2 K · 10 Bench.
    Overflow flows RB/WR/TE → Flex → Bench automatically.
 3. **Simulate** — for every draft slot, 2,500 Monte Carlo snake drafts:
    - Each target's "taken at" pick is sampled from a normal distribution around

@@ -7,9 +7,9 @@ const BUCKETS = [
   { key: "RB",    label: "RB",    cap: 5, accepts: ["RB"] },
   { key: "WR",    label: "WR",    cap: 5, accepts: ["WR"] },
   { key: "TE",    label: "TE",    cap: 3, accepts: ["TE"] },
-  { key: "FLEX",  label: "Flex",  cap: 3, accepts: ["RB", "WR", "TE"] },
-  { key: "K",     label: "Kicker", cap: 1, accepts: ["PK"] },
-  { key: "BENCH", label: "Bench", cap: 5, accepts: ["QB", "RB", "WR", "TE", "PK", "DEF"] },
+  { key: "FLEX",  label: "Flex",  cap: 5, accepts: ["RB", "WR", "TE"] },
+  { key: "K",     label: "Kicker", cap: 2, accepts: ["PK"] },
+  { key: "BENCH", label: "Bench", cap: 10, accepts: ["QB", "RB", "WR", "TE", "PK", "DEF"] },
 ];
 const SIMS = 2500;
 
