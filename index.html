@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SlotFinder — Reverse Mock Draft</title>
+<link rel="stylesheet" href="styles.css?v=2">
+</head>
+<body>
+<header class="site-header">
+  <h1>SlotFinder</h1>
+  <p class="tagline">The reverse mock draft. Pick the players you want — we tell you which draft slot gets them.</p>
+</header>
+
+<main>
+  <!-- Step 1: league settings -->
+  <section class="panel" id="settings-panel">
+    <h2><span class="step">1</span> League settings</h2>
+    <div class="settings-row">
+      <label>Teams
+        <select id="teams">
+          <option value="8">8</option>
+          <option value="10">10</option>
+          <option value="12" selected>12</option>
+          <option value="14">14</option>
+          <option value="16">16</option>
+        </select>
+      </label>
+      <label>Scoring
+        <select id="format">
+          <option value="standard" selected>Standard</option>
+          <option value="half-ppr">Half PPR</option>
+          <option value="ppr">PPR</option>
+        </select>
+      </label>
+      <label>Rounds to plan
+        <select id="rounds">
+          <option>8</option><option selected>10</option><option>12</option><option>13</option><option>15</option>
+        </select>
+      </label>
+    </div>
+    <p class="hint" id="adp-note"></p>
+  </section>
+
+  <!-- Step 2: targets -->
+  <section class="panel" id="targets-panel">
+    <h2><span class="step">2</span> Your target list</h2>
+    <p class="hint">Search any player. They land in their position group (overflow goes to Flex, then Bench). Caps: 3 QB · 5 RB · 5 WR · 3 TE · 3 Flex · 1 K · 5 Bench.</p>
+    <div class="search-wrap">
+      <input id="search" type="text" placeholder="Search a player… e.g. Gibbs" autocomplete="off">
+      <ul id="search-results" class="search-results" hidden></ul>
+    </div>
+    <div id="buckets" class="buckets"></div>
+    <div id="warnings"></div>
+  </section>
+
+  <!-- Step 3: results -->
+  <section class="panel" id="run-panel">
+    <h2><span class="step">3</span> Find your slot</h2>
+    <button id="run" class="run-btn" disabled>Simulate 2,500 drafts per slot</button>
+    <div id="results" hidden>
+      <h3>Best draft slots for your targets</h3>
+      <p class="hint">Score = expected value of targets you land across <span id="res-rounds"></span> rounds, averaged over 2,500 snake-draft simulations per slot using consensus ADP ± volatility.</p>
+      <div id="slot-chart" class="viz-root"></div>
+      <div id="slot-cards" class="slot-cards"></div>
+      <div id="slot-detail"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  ADP: FantasyFootballCalculator consensus (updated weekly) · Player DB: Sleeper · Not affiliated with any platform.
+</footer>
+
+<div id="tooltip" class="tooltip" hidden></div>
+<script src="app.js?v=2"></script>
+</body>
+</html>
