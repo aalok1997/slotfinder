@@ -44,6 +44,15 @@ function adpInfo(p, format = state.format, teams = state.teams) {
   return f[size] || f["12"] || Object.values(f)[0] || null;
 }
 
+const SRC_LABELS = { sleeper: "Sleeper", fantasypros: "FantasyPros", espn: "ESPN", ffc: "FFC mocks" };
+
+// "Sleeper 6.6 · FantasyPros 2.7 · ESPN 4 · FFC 4.7" for the current format
+function srcBreakdown(p) {
+  const src = p.src?.[state.format] || p.src?.["standard"] || Object.values(p.src || {})[0];
+  if (!src) return "";
+  return Object.entries(src).map(([k, v]) => `${SRC_LABELS[k] || k} ${v}`).join(" · ");
+}
+
 function fmtPick(overall, teams = state.teams) {
   const round = Math.ceil(overall / teams);
   const pick = overall - (round - 1) * teams;
@@ -91,6 +100,7 @@ function renderTargets() {
       const a = adpInfo(p);
       const li = document.createElement("li");
       li.className = "chip";
+      li.title = srcBreakdown(p);
       li.innerHTML =
         `<span>${p.name}</span>` +
         `<span class="adp">${a ? "ADP " + fmtPick(Math.round(a.adp)) : "—"}</span>`;
@@ -147,9 +157,10 @@ function renderSearch(q) {
     const full = !taken && bucketFor(p.pos) === null;
     const li = document.createElement("li");
     if (taken || full) li.className = "disabled";
+    li.title = srcBreakdown(p);
     li.innerHTML =
       `<span>${p.name}</span>` +
-      `<span class="meta">${p.pos} · ${p.team} · ${a ? "ADP " + fmtPick(Math.round(a.adp)) : "no ADP"}${taken ? " · added" : full ? " · group full" : ""}</span>`;
+      `<span class="meta">${p.pos} · ${p.team} · ${a ? "ADP " + fmtPick(Math.round(a.adp)) : "no ADP"} · ${p.nsrc} src${taken ? " · added" : full ? " · group full" : ""}</span>`;
     if (!taken && !full) {
       li.onclick = () => {
         addTarget(p.id);

@@ -29,16 +29,32 @@ python3 -m http.server 8642  # then open http://localhost:8642
 
 Pure static site — no build step, no backend. Deployable to any static host.
 
-## Data sources
+## Data sources — blended consensus
 
-- **ADP + volatility**: fantasyfootballcalculator.com public API (per league size & format)
-- **Player DB**: sleeper.app public API
-- 16-team leagues use 14-team ADP (16 isn't published; overall-pick ADP transfers well)
+Every player's draft position is a weighted blend of four rankings sources
+(per scoring format), computed by `build_data.py`:
+
+| Source | What it is | Weight |
+|---|---|---|
+| **Sleeper ADP** | platform ADP from Sleeper's projections API | **1.5×** (drafts happen here) |
+| **FantasyPros ECR** | consensus of 100+ expert ranking sets | 1.0× |
+| **ESPN** | live-draft ADP + editorial Standard/PPR ranks | 1.0× |
+| **FantasyFootballCalculator** | real mock-draft ADP, per league size | 1.0× |
+
+Volatility (the stdev the simulator samples from) is the **widest of**: FFC's
+observed draft stdev, FantasyPros' expert disagreement, and the spread between
+the four sources — players the sources argue about are modeled as risky.
+Hover any player chip or search result for the per-source breakdown.
+
+- Only FFC publishes per-league-size ADP; other sources are blended at the
+  12-team baseline and shifted by FFC's size delta.
+- 16-team leagues use 14-team ADP (16 isn't published; overall-pick ADP transfers well).
+- Team defense names are normalized across sources ("Seahawks D/ST" = "Seattle Defense").
 
 ## Roadmap
 
+- [x] Blend multiple ranking sources (Sleeper, FantasyPros, ESPN, FFC) into a consensus
 - [ ] Editable position caps ("this can become an edit")
-- [ ] Blend more ranking sources (ESPN, FantasyPros ECR, Sleeper ADP) into a consensus
 - [ ] Dream-team mode: max-3-per-round realistic best roster builder
 - [ ] Priority ordering within targets (drag to rank) instead of pure ADP-value greedy
 - [ ] Shareable result links
